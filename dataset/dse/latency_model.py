@@ -108,7 +108,7 @@ class LatencyModel():
             params += list(mlp.parameters())
         optimizer = torch.optim.Adam(params, lr=1e-5, weight_decay=1e-5)
         self.optimizer = optimizer
-        # scheduler = torch.optim.lr_scheduler.StepLR(optimizer, 1000, gamma=0.8)
+        scheduler = torch.optim.lr_scheduler.StepLR(optimizer, 1000, gamma=0.8)
     
         prob_keys = utils.keys_by_type(train_data.df, "prob", scalar_only=True)
         y_keys = [self.target_key]
@@ -223,7 +223,7 @@ class LatencyModel():
             logger.info(f"Finished training iter {iter}, loss {loss}") 
             logger.debug("y_batch: %s, y_pred_batch: %s, mapping_batch: %s, prob_batch: %s, access_batch: %s", 
                          y_batch[-1], y_pred_batch[-1], mapping_batch[-1], prob_batch[-1], access_batch[-1])
-            # scheduler.step()
+            scheduler.step()
             if (iter+1) % 100 == 0:
                 for i, mlp in enumerate(mlps):
                     torch.save(mlp.state_dict(), mlp_paths[i])
