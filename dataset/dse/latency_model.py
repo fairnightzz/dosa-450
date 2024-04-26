@@ -75,8 +75,8 @@ class LatencyModel():
             output_size=1,
             n_layers=len(hidden_layer_sizes),
             size=hidden_layer_sizes,
-            activation="gelu",
-            dropout=0.3,
+            activation="leaky_relu",
+            dropout=0,
             output_activation="softplus",
         )
         mlp.to(pytorch_util.device)
