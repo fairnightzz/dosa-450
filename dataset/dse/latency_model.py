@@ -75,8 +75,8 @@ class LatencyModel():
             output_size=1,
             n_layers=len(hidden_layer_sizes),
             size=hidden_layer_sizes,
-            activation="gelu",
-            dropout=0.3,
+            activation="leaky_relu",
+            dropout=0,
             output_activation="softplus",
         )
         mlp.to(pytorch_util.device)
@@ -106,7 +106,7 @@ class LatencyModel():
         params = []
         for mlp in mlps:
             params += list(mlp.parameters())
-        optimizer = torch.optim.Adam(params, lr=1e-5, weight_decay=1e-5)
+        optimizer = torch.optim.Adam(params, lr=1e-5)
         self.optimizer = optimizer
         # scheduler = torch.optim.lr_scheduler.StepLR(optimizer, 1000, gamma=0.8)
     
