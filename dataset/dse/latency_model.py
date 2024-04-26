@@ -63,8 +63,7 @@ class LatencyModel():
         opt_path = pathlib.Path(self.output_dir).resolve() / f"mlp_opt_{save_str}.pt"
 
         mlps = []
-        hidden_layer_sizes = (256, 512, 2048, 2048, 512, 256, 64)
-        # hidden_layer_sizes = (256, 1024, 256)
+        hidden_layer_sizes = (256, 512, 2048, 4096, 4096, 2048, 512, 256)        # hidden_layer_sizes = (256, 1024, 256)
         # hidden_layer_sizes = (16)
         # hidden_layer_sizes = (512, 2048, 2048, 512, 128)
         input_size = len(self.internal_relevant_idxs)+11+3
@@ -106,7 +105,7 @@ class LatencyModel():
         params = []
         for mlp in mlps:
             params += list(mlp.parameters())
-        optimizer = torch.optim.Adam(params, lr=1e-5, weight_decay=1e-5)
+        optimizer = torch.optim.Adam(params, lr=1e-5)
         self.optimizer = optimizer
         # scheduler = torch.optim.lr_scheduler.StepLR(optimizer, 1000, gamma=0.8)
     
